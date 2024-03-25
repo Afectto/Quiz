@@ -1,4 +1,5 @@
 using System;
+using Grid;
 using UnityEngine;
 
 public class SelectedGridSlot : MonoBehaviour
@@ -8,6 +9,7 @@ public class SelectedGridSlot : MonoBehaviour
 
     private bool IsOverlayActive;
     public static Action<string> OnClickSlotItem;
+    
     private void Start()
     {
         Instantiate();

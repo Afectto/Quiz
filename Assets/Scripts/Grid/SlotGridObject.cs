@@ -1,46 +1,50 @@
 ﻿using UnityEngine;
 
-public class SlotGridObject
+namespace Grid
 {
-    private Grid<SlotGridObject> _grid;
-    private int _x;
-    private int _y;
-
-    private Slot _slotItem;
-    
-    public SlotGridObject(Grid<SlotGridObject> grid, int x, int y)
+    public class SlotGridObject
     {
-        _grid = grid;
-        _x = x;
-        _y = y;
-    }
+        private Grid<SlotGridObject> _grid;
+        private int _x;
+        private int _y;
 
-    public void SetSlotItem(Slot slot)
-    {
-        if (_slotItem)
+        private Slot _slotItem;
+
+        public SlotGridObject(Grid<SlotGridObject> grid, int x, int y)
         {
-            GameObject.Destroy(_slotItem);
+            _grid = grid;
+            _x = x;
+            _y = y;
         }
-        _slotItem = slot;
-        _grid.TriggerGridObjectChange(_x,_y);
-    }
 
-    public string GetSlotIdentifier()
-    {
-        return _slotItem.Identifier;
-    }
-
-
-    public Slot GetSlot()
-    {
-        return _slotItem;
-    }
-    
-    public void Destroy()
-    {
-        if (_slotItem)
+        public void SetSlotItem(Slot slot)
         {
-            GameObject.Destroy(_slotItem.gameObject);
+            if (_slotItem)
+            {
+                GameObject.Destroy(_slotItem);
+            }
+
+            _slotItem = slot;
+            _grid.TriggerGridObjectChange(_x, _y);
+        }
+
+        public string GetSlotIdentifier()
+        {
+            return _slotItem.Identifier;
+        }
+
+
+        public Slot GetSlot()
+        {
+            return _slotItem;
+        }
+
+        public void Destroy()
+        {
+            if (_slotItem)
+            {
+                GameObject.Destroy(_slotItem.gameObject);
+            }
         }
     }
 }

@@ -1,11 +1,11 @@
 using System;
+using Grid;
 using UnityEngine;
 
 public class ChangeLevel : MonoBehaviour
 {
     private int _currentLevel = 0;
     [SerializeField] private CreateGrid Grid;
-    
     [SerializeField] private QuestGameObserver QuestGameObserver;
 
     public static Action onLevelChange;

@@ -1,13 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Grid;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasOverlay : MonoBehaviour
 {
     private CanvasGroup _canvasGroup;
     public static Action<CanvasGroup, bool> OnCompleteGameCanvas;
-    
+    [SerializeField] private Text QuestText;
+        
     void Start()
     {
         CreateGrid.onCompleteGame += OnCompleteGame;
@@ -16,17 +17,18 @@ public class CanvasOverlay : MonoBehaviour
         Deactivate();
 
         myAnimator.OnFadeAnimationCanvasGroupComplete += Deactivate;
-
     }
 
     private void OnCompleteGame()
     {
+        QuestText.gameObject.SetActive(false);
         gameObject.SetActive(true);
         OnCompleteGameCanvas?.Invoke(_canvasGroup, true);
     }
 
     private void Deactivate()
     {
+        QuestText.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
 
