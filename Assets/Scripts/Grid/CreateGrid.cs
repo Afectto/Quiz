@@ -20,17 +20,12 @@ namespace Grid
 
         public int RowCount => _rowCount;
         public int ColumnCount => _columnCount;
-
         public Grid<SlotGridObject> SlotItemGrid => _slotItemGrid;
 
-        public static Action<Transform> onStartFirstLevel;
+        public static Action<Transform> onStartFirstLevelSlotAnimation;
+        public static Action onStartFirstLevel;
         public static Action onCompleteGame;
 
-        public void ReGenerateLevel()
-        {
-            GenerateLevel(_currentLevel);
-        }
-        
         public void GenerateLevel(int levelNum)
         {
             if (LevelDataArray.Length <= 0) return;
@@ -40,13 +35,11 @@ namespace Grid
                 return;
             }
 
+            ClearGrid();
+            
             _currentLevel = levelNum;
-            var levelData = LevelDataArray[levelNum].LevelData;
-
-            _rowCount = levelData.RowCount;
-            _columnCount = levelData.ColumnCount;
-            _cellSize = levelData.CellSize;
-
+            
+            FillLevelData();
             UpdateBackgroundScale();
 
             _slotItemGrid = new Grid<SlotGridObject>(_columnCount, _rowCount, _cellSize,
@@ -60,6 +53,14 @@ namespace Grid
             }
 
             StartSlotAnimationIfNeed();
+        }
+
+        private void FillLevelData()
+        {
+            var levelData = LevelDataArray[_currentLevel].LevelData;
+            _rowCount = levelData.RowCount;
+            _columnCount = levelData.ColumnCount;
+            _cellSize = levelData.CellSize;
         }
 
         private void UpdateBackgroundScale()
@@ -111,7 +112,7 @@ namespace Grid
             return newSlot;
         }
 
-        public void ClearGrid()
+        private void ClearGrid()
         {
             for (int i = 0; i < _columnCount; i++)
             {
@@ -122,16 +123,16 @@ namespace Grid
             }
         }
 
-        public void StartSlotAnimationIfNeed()
+        private void StartSlotAnimationIfNeed()
         {
             if (_currentLevel != 0) return;
-
+            onStartFirstLevel?.Invoke();
             for (int i = 0; i < _columnCount; i++)
             {
                 for (int j = 0; j < _rowCount; j++)
                 {
-                    var transform = _slotItemGrid.GetGridObject(i, j).GetSlot().transform;
-                    onStartFirstLevel?.Invoke(transform);
+                    var transformSlot = _slotItemGrid.GetGridObject(i, j).GetSlot().transform;
+                    onStartFirstLevelSlotAnimation?.Invoke(transformSlot);
                 }
             }
         }

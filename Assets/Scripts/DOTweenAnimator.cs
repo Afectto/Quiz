@@ -1,9 +1,10 @@
 using System;
 using DG.Tweening;
 using Grid;
+using CanvasOverlay;
 using UnityEngine;
 
-public class myAnimator : MonoBehaviour
+public class DOTweenAnimator : MonoBehaviour
 {
     [SerializeField] private ParticleSystem ParticleSystem;
 
@@ -13,8 +14,8 @@ public class myAnimator : MonoBehaviour
     private void Awake()
     {
         Slot.OnClickSlotAnimation += OnClickSlotAnimation;
-        CreateGrid.onStartFirstLevel += onStartFirstLevel;
-        CanvasOverlay.OnCompleteGameCanvas += FadeAnimationCanvasGroup;
+        CreateGrid.onStartFirstLevelSlotAnimation += onStartFirstLevel;
+        CanvasOverlayEndRound.OnStartFadeAnimationCanvas += FadeAnimationCanvasGroup;
         RestartGame.OnStartFadeAnimationNewGame += FadeAnimationCanvasGroup;
     }
 
@@ -79,10 +80,10 @@ public class myAnimator : MonoBehaviour
         mySequence.Play();
     }
 
-    private void FadeAnimationCanvasGroup(CanvasGroup canvasGroup, bool isIn = true)
+    private void FadeAnimationCanvasGroup(CanvasGroup canvasGroup, float duration = 0.75f, bool isIn = true)
     {
         var mySequence = DOTween.Sequence();
-        mySequence.Append(canvasGroup.DOFade(isIn ? 1f : 0, 0.75f));
+        mySequence.Append(canvasGroup.DOFade(isIn ? 1f : 0, duration));
         if (!isIn)
         {
             mySequence.OnComplete(() =>
@@ -96,8 +97,8 @@ public class myAnimator : MonoBehaviour
     private void OnDestroy()
     {
         Slot.OnClickSlotAnimation -= OnClickSlotAnimation;
-        CreateGrid.onStartFirstLevel -= onStartFirstLevel;
-        CanvasOverlay.OnCompleteGameCanvas -= FadeAnimationCanvasGroup;
+        CreateGrid.onStartFirstLevelSlotAnimation -= onStartFirstLevel;
+        CanvasOverlayEndRound.OnStartFadeAnimationCanvas -= FadeAnimationCanvasGroup;
         RestartGame.OnStartFadeAnimationNewGame -= FadeAnimationCanvasGroup;
     }
 }

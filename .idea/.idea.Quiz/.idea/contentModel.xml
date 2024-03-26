@@ -288,15 +288,19 @@
           <e p="readme.txt" t="Include" />
         </e>
         <e p="Scripts" t="Include">
-          <e p="CanvasOverlay.cs" t="Include" />
+          <e p="CanvasOverlay" t="Include">
+            <e p="CanvasOverlayBase.cs" t="Include" />
+            <e p="CanvasOverlayEndRound.cs" t="Include" />
+            <e p="CanvasOverlayLoading.cs" t="Include" />
+          </e>
           <e p="ChangeLevel.cs" t="Include" />
+          <e p="DOTweenAnimator.cs" t="Include" />
           <e p="Grid" t="Include">
             <e p="CreateGrid.cs" t="Include" />
             <e p="Grid.cs" t="Include" />
             <e p="Slot.cs" t="Include" />
             <e p="SlotGridObject.cs" t="Include" />
           </e>
-          <e p="myAnimator.cs" t="Include" />
           <e p="QuestGameObserver.cs" t="Include" />
           <e p="RestartGame.cs" t="Include" />
           <e p="ScriptableObject" t="Include">

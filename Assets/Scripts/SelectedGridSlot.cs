@@ -14,6 +14,8 @@ public class SelectedGridSlot : MonoBehaviour
     {
         Instantiate();
         ChangeLevel.onLevelChange += Instantiate;
+        CreateGrid.onCompleteGame += OnChangeOverlayActive;
+        RestartGame.OnStartNewGame += OnChangeOverlayActive;
     }
 
     public void Instantiate()
@@ -22,6 +24,11 @@ public class SelectedGridSlot : MonoBehaviour
         {
             _slotItemGrid = Grid.SlotItemGrid;
         }
+    }
+
+    private void OnChangeOverlayActive()
+    {
+        IsOverlayActive = !IsOverlayActive;
     }
 
     private void Update()
@@ -46,5 +53,7 @@ public class SelectedGridSlot : MonoBehaviour
     private void OnDestroy()
     {
         ChangeLevel.onLevelChange -= Instantiate;
+        CreateGrid.onCompleteGame -= OnChangeOverlayActive;
+        RestartGame.OnStartNewGame -= OnChangeOverlayActive;
     }
 }

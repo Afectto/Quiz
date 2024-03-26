@@ -17,13 +17,12 @@ public class ChangeLevel : MonoBehaviour
             GoNextLevel();
         }
 
-        myAnimator.OnNeedChangeLevel += GoNextLevel;
+        DOTweenAnimator.OnNeedChangeLevel += GoNextLevel;
         RestartGame.OnStartNewGame += RestartLevelGame;
     }
 
     private void GoNextLevel()
     {
-        Grid.ClearGrid();
         Grid.GenerateLevel(_currentLevel);
         onLevelChange?.Invoke();
             
@@ -39,6 +38,6 @@ public class ChangeLevel : MonoBehaviour
 
     private void OnDestroy()
     {
-        myAnimator.OnNeedChangeLevel -= GoNextLevel;
+        DOTweenAnimator.OnNeedChangeLevel -= GoNextLevel;
     }
 }
